@@ -8,7 +8,6 @@ WEB_APP_URL = "https://devarlec.github.io/telega_m_bernesa/soviet_filv/"
 
 app = Flask(__name__)
 
-# Короткий адрес для галереи
 @app.route("/gallery")
 def gallery():
     return redirect(WEB_APP_URL)
@@ -30,29 +29,17 @@ def webhook():
         )
         
         if is_command:
-            # Короткая ссылка вместо длинной
-            short_url = "https://telega-m-bernesa.onrender.com/gallery"
+            # Специальная ссылка Telegram для принудительного открытия во встроенном браузере
+            telegram_link = f"https://t.me/iv?url={WEB_APP_URL}&rhash=webapp"
             
-            if chat_type in ["group", "supergroup"]:
-                reply_text = f"🎞️ Диафильм 'Советское киноискусство 20-х годов'\n\nОткрыть: {short_url}"
-            else:
-                keyboard = {
-                    "inline_keyboard": [[{
-                        "text": "🎬 Открыть диафильм",
-                        "web_app": {"url": WEB_APP_URL}
-                    }]]
-                }
-                reply_text = "🎞️ Диафильм 'Советское киноискусство 20-х годов'\n\nНажми на кнопку ниже:"
+            reply_text = f"🎞️ Диафильм 'Советское киноискусство 20-х годов'\n\n👉 [Открыть галерею]({telegram_link})"
             
-            data = {
+            requests.post(f"{TELEGRAM_API}/sendMessage", json={
                 "chat_id": chat_id,
-                "text": reply_text
-            }
-            
-            if chat_type not in ["group", "supergroup"]:
-                data["reply_markup"] = keyboard
-            
-            requests.post(f"{TELEGRAM_API}/sendMessage", json=data)
+                "text": reply_text,
+                "parse_mode": "Markdown",
+                "disable_web_page_preview": False
+            })
     
     return "ok", 200
 
