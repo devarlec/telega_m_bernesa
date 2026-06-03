@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Просмотр картинок</title>
+</head>
+<body>
+    <div>
+        <button onclick="prev()">Назад</button>
+        <button onclick="next()">Вперед</button>
+    </div>
+    
+    <br>
+    
+    <img id="image" src="" style="max-width: 800px;">
+    
+    <p>Кадр <span id="current">1</span> из <span id="total">64</span></p>
+
+    <script>
+        const images = [
+            "https://diafilmy.su/uploads/posts/2015-04/1427999169_01.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999152_02.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999146_03.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999151_04.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999142_05.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999142_06.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999164_07.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999180_08.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999226_09.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999163_10.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999223_11.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999225_12.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999244_13.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999195_14.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999255_15.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999208_16.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999227_17.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999208_18.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999194_19.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999234_20.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999235_21.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999232_22.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999276_23.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999295_24.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999282_25.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999231_26.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999300_27.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999241_28.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999279_29.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999301_30.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999289_31.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999322_32.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999265_33.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999315_34.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999339_35.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999306_36.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999327_37.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999364_38.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999367_39.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999331_40.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999351_41.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999346_42.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999312_43.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999340_44.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999370_45.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999409_46.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999409_47.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999379_48.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999399_49.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999352_50.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999417_51.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999373_52.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999421_53.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999391_54.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999416_55.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999453_56.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999384_57.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999409_58.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999411_59.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999445_60.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999411_61.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999426_62.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999401_63.jpg",
+            "https://diafilmy.su/uploads/posts/2015-04/1427999179_64.jpg"
+        ];
+
+        let index = 0;
+        
+        document.getElementById("total").innerText = images.length;
+        document.getElementById("image").src = images[0];
+        
+        function next() {
+            if (index < images.length - 1) {
+                index++;
+                document.getElementById("image").src = images[index];
+                document.getElementById("current").innerText = index + 1;
+            }
+        }
+        
+        function prev() {
+            if (index > 0) {
+                index--;
+                document.getElementById("image").src = images[index];
+                document.getElementById("current").innerText = index + 1;
+            }
+        }
+    </script>
+</body>
+</html>
