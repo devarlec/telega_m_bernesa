@@ -21,7 +21,6 @@ def webhook():
     if update and "message" in update:
         chat_id = update["message"]["chat"]["id"]
         text = update["message"].get("text", "")
-        chat_type = update["message"]["chat"]["type"]
         
         is_command = (
             text == "/sovietfilmhistory" or 
@@ -29,16 +28,14 @@ def webhook():
         )
         
         if is_command:
-            # Специальная ссылка Telegram для принудительного открытия во встроенном браузере
-            telegram_link = f"https://t.me/iv?url={WEB_APP_URL}&rhash=webapp"
-            
-            reply_text = f"🎞️ Диафильм 'Советское киноискусство 20-х годов'\n\n👉 [Открыть галерею]({telegram_link})"
+            # Используем HTML-ссылку вместо Markdown — она стабильнее работает на всех платформах
+            reply_text = f'🎞️ Диафильм "Советское киноискусство 20-х годов"\n\n👉 <a href="{WEB_APP_URL}">Открыть галерею</a>'
             
             requests.post(f"{TELEGRAM_API}/sendMessage", json={
                 "chat_id": chat_id,
                 "text": reply_text,
-                "parse_mode": "Markdown",
-                "disable_web_page_preview": False
+                "parse_mode": "HTML",
+                "disable_web_page_preview": True
             })
     
     return "ok", 200
