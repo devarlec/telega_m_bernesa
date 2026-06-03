@@ -2,17 +2,35 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Просмотр картинок</title>
+    <style>
+        /* Минимальные стили для удобства на телефоне */
+        body {
+            margin: 0;
+            padding: 10px;
+            text-align: center;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 0 5px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
     <div>
-        <button onclick="prev()">Назад</button>
-        <button onclick="next()">Вперед</button>
+        <button onclick="prev()">◀ Назад</button>
+        <button onclick="next()">Вперед ▶</button>
     </div>
     
     <br>
     
-    <img id="image" src="" style="max-width: 800px;">
+    <img id="image" src="">
     
     <p>Кадр <span id="current">1</span> из <span id="total">64</span></p>
 
