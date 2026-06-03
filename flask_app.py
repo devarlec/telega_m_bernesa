@@ -7,6 +7,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 BOT_TOKEN = "6324068841:AAFziCaTU57gZ9PO8f9AY-7kL-YAFIglfDg"
+BOT_USERNAME = "MarkBernesBot"  # Добавляем username бота
 WEB_APP_URL = "https://devarlec.github.io/telega_m_bernesa/soviet_filv/"
 
 app = Flask(__name__)
@@ -27,7 +28,13 @@ def webhook():
         
         logger.info(f"Сообщение от chat_id={chat_id}, тип={chat_type}, текст={text}")
         
-        if text == "/sovietfilmhistory" or text == f"/sovietfilmhistory@{BOT_TOKEN.split(':')[0]}":
+        # Проверяем команду (с @username или без)
+        is_command = (
+            text == "/sovietfilmhistory" or 
+            text == f"/sovietfilmhistory@{BOT_USERNAME}"
+        )
+        
+        if is_command:
             logger.info(f"Команда распознана! Отправляем ответ в chat_id={chat_id}")
             
             try:
